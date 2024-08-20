@@ -1,0 +1,78 @@
+/* src/styles/main.css */
+/* Base styles for mobile (default) */
+body {
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    margin: 0;
+}
+
+#app {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* Media query for tablets and larger screens */
+@media (min-width: 768px) {
+    body {
+        padding: 20px;
+    }
+
+    #app {
+        max-width: 750px;
+    }
+}
+
+/* Media query for desktops and larger screens */
+@media (min-width: 1024px) {
+    body {
+        padding: 30px;
+    }
+
+    #app {
+        max-width: 960px;
+    }
+}
+
+.no-marker {
+    list-style-type: none; /* Removes the dot/number from all lists */
+    padding-left: 0; /* Removes the default indentation */
+}
+
+.main-input {
+    padding: 5px;
+    margin: 10px;
+}
+
+.item-text {
+    padding: 5px;
+}
+
+/* Grocery List Container */
+.grocery-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Grocery Item */
+.grocery-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.delete-item {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.3s;
+
+}
