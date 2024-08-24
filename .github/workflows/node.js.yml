@@ -33,7 +33,7 @@ jobs:
         mkdir -p gh-pages
         cp index.html gh-pages/
         cp -R dist/ gh-pages/dist/
-        cp -R src/styles gh-pages/src/styles  # Ensure this path is correct
+        cp -R src/styles/ gh-pages/src/styles/  # Ensure this path is correct
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
