@@ -14,6 +14,9 @@ class App {
         const appElement: HTMLElement | null = document.getElementById('app');
         if (appElement) {
 
+            let inputDiv = document.createElement('div');
+            inputDiv.classList.add('grocery-form');
+
             this.lu = document.createElement('lu');
             this.lu.id = 'list';
             this.lu.classList.add('no-marker');
@@ -43,10 +46,11 @@ class App {
             h5.textContent = `Total: ${this.total}`;
 
             appElement.appendChild(h5);
-            appElement.appendChild(this.inItemName);
-            appElement.appendChild(this.inItemPrice);
-            appElement.appendChild(this.inItemQuantity);
-            appElement.appendChild(this.addItemButton);
+            inputDiv.appendChild(this.inItemName);
+            inputDiv.appendChild(this.inItemPrice);
+            inputDiv.appendChild(this.inItemQuantity);
+            inputDiv.appendChild(this.addItemButton);
+            appElement.appendChild(inputDiv);
             appElement.appendChild(this.lu);
 
             this.bindEvents();
@@ -73,11 +77,10 @@ class App {
             spanTotal.classList.add('item-text');
 
             spanName.textContent = `Product: ${item.name}`;
-            spanPrice.textContent = `Price: ${item.price}`;
+            spanPrice.textContent = `Price: ${item.price.toLocaleString('en-US', {style:'currency', currency: 'USD'})}`;
             spanQuantity.textContent = `Quantity: ${item.quantity}`;
-            spanTotal.textContent = `Total: ${item.total}`;
+            spanTotal.textContent = `Total: ${item.total.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}`;
 
-            // span.textContent = `${item.name}🛒 ${item.price}💲 ${item.quantity}🔢 ${item.total}💸`;
             li.appendChild(spanName);
             li.appendChild(spanPrice);
             li.appendChild(spanQuantity);
@@ -135,7 +138,7 @@ class App {
             if(isNaN(this.total)){
                 this.total = 0;
             }
-            total.textContent = `Total: ${this.total}`
+            total.textContent = `Total: ${this.total.toLocaleString('en-US',{ style: 'currency', currency: 'USD'})}`
         }
     }
 }
