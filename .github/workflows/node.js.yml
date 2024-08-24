@@ -24,12 +24,16 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
 
+    - name: List files for debugging
+      run: |
+        ls -R
+
     - name: Prepare deployment files
       run: |
         mkdir -p gh-pages
         cp index.html gh-pages/
         cp -R dist/ gh-pages/dist/
-        cp -R src/styles gh-pages/src/styles  # Copy the CSS directory
+        cp -R src/styles gh-pages/src/styles  # Ensure this path is correct
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
