@@ -113,9 +113,10 @@ class App {
         const lu: HTMLElement | null = document.getElementById('list');
         if (lu) {
             lu.removeChild(item);
+            console.log(item);
             if (item.childNodes[2].textContent) {
-                let itemTotal = item.childNodes[2].textContent;
-                this.updateTotal(parseFloat(itemTotal), 'subtract')
+                let itemTotal = item.childNodes[5].textContent;
+                this.updateTotal(parseFloat(itemTotal!), 'subtract')
             }
         }
     }
@@ -124,14 +125,44 @@ class App {
         if (this.addItemButton) {
             this.addItemButton.addEventListener('click', () => this.addItem());
         }
+
+        if(this.inItemName){
+            this.inItemName.addEventListener("keypress", function (event){
+                if(event.key==="Enter"){
+                    event.preventDefault();
+                    document.getElementById("item-price")!.focus();
+                }
+            });
+        }
+        if(this.inItemPrice){
+            this.inItemPrice.addEventListener("keypress", function (event){
+                if(event.key==="Enter"){
+                    event.preventDefault();
+                    document.getElementById("item-qtd")!.focus();
+                }
+            });
+        }
+
+        if(this.inItemQuantity){
+            this.inItemQuantity.addEventListener("keypress", function (event) {
+                if(event.key==="Enter"){
+                    event.preventDefault()
+                    document.getElementById('add-btn')!.click();
+                    document.getElementById('item-name')!.focus();
+                }
+            })
+        }
     }
 
     private updateTotal(value: number, operation: 'add' | 'subtract'): void {
+        console.log(value);
         if (operation === 'add') {
             this.total += value;
         } else if (operation === 'subtract') {
             this.total -= value;
         }
+
+        console.log(this.total);
 
         const total = document.getElementById('total');
         if (total) {
