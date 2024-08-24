@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -27,9 +26,14 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
 
+    - name: Clean before deployment
+      run: |
+        git clean -fdx
+        git reset --hard
+
     - name: Deploy to GitHub Pages
-      if: ${{ github.ref == 'refs/heads/master' }}
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./dist
+        force_orphan: true   # Optional: Force deployment even if branch history conflicts
