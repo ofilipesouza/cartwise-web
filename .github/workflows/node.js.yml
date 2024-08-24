@@ -29,6 +29,7 @@ jobs:
         mkdir -p gh-pages
         cp index.html gh-pages/
         cp -R dist/ gh-pages/dist/
+        cp -R src/styles gh-pages/src/styles  # Copy the CSS directory
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
