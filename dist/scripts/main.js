@@ -23,10 +23,14 @@ class App {
             this.inItemPrice = document.createElement('input');
             this.inItemPrice.id = 'item-price';
             this.inItemPrice.placeholder = 'Price';
+            this.inItemPrice.type = 'text';
+            this.inItemPrice.inputMode = 'decimal';
             this.inItemPrice.classList.add('main-input');
             this.inItemQuantity = document.createElement('input');
             this.inItemQuantity.id = 'item-qtd';
             this.inItemQuantity.placeholder = 'Quantity';
+            this.inItemQuantity.type = 'text';
+            this.inItemQuantity.inputMode = 'decimal';
             this.inItemQuantity.classList.add('main-input');
             const h5 = document.createElement('h5');
             h5.id = 'total';
@@ -48,7 +52,7 @@ class App {
         if (name && price && qtd) {
             const li = document.createElement('li');
             li.classList.add('grocery-item');
-            let item = new Item(name.value, parseFloat(price.value), parseFloat(qtd.value));
+            let item = new Item(name.value, parseFloat(price.value.replace(/,/, '.')), parseFloat(qtd.value.replace(/,/, '.')));
             let spanName = document.createElement('span');
             spanName.classList.add('item-text');
             let spanPrice = document.createElement('span');
@@ -58,9 +62,15 @@ class App {
             let spanTotal = document.createElement('span');
             spanTotal.classList.add('item-text');
             spanName.textContent = `Product: ${item.name}`;
-            spanPrice.textContent = `Price: ${item.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`;
+            spanPrice.textContent = `Price: ${item.price.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            })}`;
             spanQuantity.textContent = `Quantity: ${item.quantity}`;
-            spanTotal.textContent = `Total: ${item.total.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`;
+            spanTotal.textContent = `Total: ${item.total.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            })}`;
             li.appendChild(spanName);
             li.appendChild(spanPrice);
             li.appendChild(spanQuantity);
@@ -116,6 +126,7 @@ class App {
                     document.getElementById("item-qtd").focus();
                 }
             });
+            this.inItemPrice.addEventListener("keydown", this.onlyNumber.bind(this));
         }
         if (this.inItemQuantity) {
             this.inItemQuantity.addEventListener("keypress", function (event) {
@@ -125,6 +136,7 @@ class App {
                     document.getElementById('item-name').focus();
                 }
             });
+            this.inItemQuantity.addEventListener("keydown", this.onlyNumber.bind(this));
         }
     }
     updateTotal(value, operation) {
@@ -135,13 +147,25 @@ class App {
         else if (operation === 'subtract') {
             this.total -= value;
         }
-        console.log(this.total);
         const total = document.getElementById('total');
         if (total) {
             if (isNaN(this.total)) {
                 this.total = 0;
             }
             total.textContent = `Total: ${this.total.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`;
+        }
+    }
+    onlyNumber(e) {
+        if (!e.key.match(/[0-9]/) && // Allow digits
+            e.key !== '.' && // Allow dot
+            e.key !== 'Backspace' && // Allow Backspace
+            e.key !== 'ArrowLeft' && // Allow Left arrow key
+            e.key !== 'ArrowRight' && // Allow Right arrow key
+            e.key !== 'Delete' && // Allow Delete key
+            e.key !== 'Enter' &&
+            e.key !== ',' &&
+            e.key !== 'Tab') { // Allow Tab key
+            e.preventDefault();
         }
     }
 }
